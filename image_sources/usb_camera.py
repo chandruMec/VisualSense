@@ -1,35 +1,47 @@
-from cv2 import VideoCapture, CAP_PROP_FRAME_WIDTH, CAP_PROP_FRAME_HEIGHT
-from image_sources.image_source import ImageSource
+from image_sources.image_source import Camera
+import cv2
+from threading import Thread
 
 
-class USBCamera(ImageSource):
-    def __init__(self, camera_sdk):
-        self.camera_sdk = camera_sdk
-        self.cam = None
+class USBCamera(Camera):
+    def __init__(self, actor):
+        super().__init__()
+        self.usbcam = None
+        self.frame_count = None
+        self.fps = None
+        self.height = None
+        self.width = None
+        self.source = None
+        self.is_acquiring = False
+        self.acquisition_thread = None
+        self.usb_actor = actor
 
-    def open(self,cam_id):
-        # Open USB camera using the camera SDK 
-        self.cam = VideoCapture(cam_id)
-        return self.cam.isOpened()
-        
+    def start_acquisition(self, src):
+        if not self.is_acquiring:
+            print("Opening your camera")
+            self.usbcam = cv2.VideoCapture(src)
+            if self.usbcam is None or not self.usbcam.isOpened():
+                print('Warning: unable to open video source: ', src)
+            else:
+                self.source = self.usbcam.getBackendName()
+                self.width = self.usbcam.get(cv2.CAP_PROP_FRAME_WIDTH)
+                self.height = self.usbcam.get(cv2.CAP_PROP_FRAME_HEIGHT)
+                self.fps = self.usbcam.get(cv2.CAP_PROP_FPS)
+                self.is_acquiring = True
+                self.acquisition_thread = Thread(target=self.acquire_frames)
+                self.acquisition_thread.start()
 
-    def close(self):
-        # Close the USB camera and release resources
-        if self.cam != None:
-            self.cam.release()
+    def stop_acquisition(self):
+        print("Closing your camera")
+        if self.is_acquiring:
+            self.is_acquiring = False
+            self.acquisition_thread.join()  # Wait for the acquisition thread to finish
+            self.usbcam.release()
+            cv2.destroyAllWindows()
 
-    def acquire_image(self):
-        # Acquire image from the USB camera using the camera SDK
-        return self.cam.read()
-
-    def release_resources(self):
-        # Release any resources associated with the USB camera
-        self.close()
-
-    def get_resolution(self):
-        # Get the resolution of the USB camera
-        return self.cam.get(CAP_PROP_FRAME_WIDTH), self.cam.get(CAP_PROP_FRAME_HEIGHT)
-    
-    def is_opened(self):
-        return self.cam.isOpened()
-    
+    def acquire_frames(self):
+        while self.is_acquiring:
+            ret, frame = self.usbcam.read()
+            if not ret:
+                break
+            self.usb_actor.process_frame(frame)
