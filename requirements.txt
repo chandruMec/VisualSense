@@ -1,3 +1,0 @@
-opencv-python
-pyside6
-pykka
