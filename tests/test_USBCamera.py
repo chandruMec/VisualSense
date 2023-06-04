@@ -4,8 +4,8 @@ from image_sources.usb_camera import USBCamera
 from actors.image_acquisition_actor import ImageAcquisitionActor
 class TestUSBCamera(unittest.TestCase):
     def setUp(self):
-
-        self.camera_ref = USBCamera(ImageAcquisitionActor(camera_type="usb"))
+        usb_acquire=ImageAcquisitionActor(camera_type="usb")
+        self.camera_ref = USBCamera(usb_acquire)
 
     def tearDown(self):
         ActorRegistry.stop_all()
