@@ -1,12 +1,14 @@
 import unittest
 
 from pykka import ActorRegistry
-from image_sources.usb_camera import USBCamera
-from actors.image_acquisition_actor import ImageAcquisitionActor
+import image_sources.usb_camera as usb_camera
+import actors.image_acquisition_actor as image_acquisition_actor
+
+
 class TestUSBCamera(unittest.TestCase):
     def setUp(self):
-        usb_acquire=ImageAcquisitionActor(camera_type="usb")
-        self.camera_ref = USBCamera(usb_acquire)
+        usb_acquire=image_acquisition_actor.ImageAcquisitionActor(camera_type="usb")
+        self.camera_ref = usb_camera.USBCamera(usb_acquire)
 
     def tearDown(self):
         ActorRegistry.stop_all()
