@@ -1,65 +1,48 @@
 import unittest
-from cv2 import VideoCapture, CAP_PROP_FRAME_WIDTH, CAP_PROP_FRAME_HEIGHT
-from image_sources.usb_camera import USBCamera
 
-class USBCameraTest(unittest.TestCase):
+from pykka import ActorRegistry
+import image_sources.usb_camera as usb_camera
+import actors.image_acquisition_actor as image_acquisition_actor
 
+
+class TestUSBCamera(unittest.TestCase):
     def setUp(self):
-        # Create an instance of the USBCamera class
-        self.camera = USBCamera(camera_sdk=None)
-
-    def test_open(self):
-        # Test the open() method with a valid camera ID
-        cam_id = 0
-        result = self.camera.open(cam_id)
-        self.assertTrue(result)
-
-        # Test opening the camera with an invalid camera ID
-        invalid_cam_id = -1
-        result = self.camera.open(invalid_cam_id)
-        self.assertFalse(result)
-
-    def test_close(self):
-        # Test the close() method when the camera is opened
-        self.camera.open(cam_id=0)
-        self.camera.close()
-        self.assertFalse(self.camera.is_opened())
-
-        # Test the close() method when the camera is not opened
-        self.camera.close()
-        self.assertFalse(self.camera.is_opened())
-
-    def test_acquire_image(self):
-        # Test acquiring an image from the camera
-        self.camera.open(cam_id=0)
-        image = self.camera.acquire_image()
-        self.assertIsNotNone(image)
-
-    def test_get_resolution(self):
-        # Test getting the camera resolution
-        self.camera.open(cam_id=0)
-        width, height = self.camera.get_resolution()
-        self.assertGreater(width, 0)
-        self.assertGreater(height, 0)
-
-    def test_is_opened(self):
-        # Test the is_opened() method when the camera is opened
-        self.camera.open(cam_id=0)
-        self.assertTrue(self.camera.is_opened())
-
-        # Test the is_opened() method when the camera is not opened
-        self.camera.close()
-        self.assertFalse(self.camera.is_opened())
-
-    def test_release_resources(self):
-        # Test releasing resources associated with the camera
-        self.camera.open(cam_id=0)
-        self.camera.release_resources()
-        self.assertFalse(self.camera.is_opened())
+        usb_acquire=image_acquisition_actor.ImageAcquisitionActor(camera_type="usb")
+        self.camera_ref = usb_camera.USBCamera(usb_acquire)
 
     def tearDown(self):
-        # Release any resources associated with the camera
-        self.camera.release_resources()
+        ActorRegistry.stop_all()
+
+    def test_start_and_stop_acquisition(self):
+        self.camera_ref.start_acquisition(src=0)
+        self.assertTrue(self.camera_ref.is_acquiring)
+
+        self.camera_ref.stop_acquisition()
+        self.assertFalse(self.camera_ref.is_acquiring)
+
+    def test_camera_param(self):
+
+        self.camera_ref.start_acquisition(src=0)
+        self.assertEqual(self.camera_ref.fps,30)
+        self.assertGreater(self.camera_ref.width,0)
+        self.assertGreater(self.camera_ref.height, 0)
+        self.camera_ref.stop_acquisition()
+
+    def test_close_open(self):
+
+        self.camera_ref.stop_acquisition()
+        self.assertFalse(self.camera_ref.is_acquiring)
+
+        self.camera_ref.start_acquisition(src=0)
+        self.assertTrue(self.camera_ref.is_acquiring)
+
+        self.camera_ref.stop_acquisition()
+        self.assertFalse(self.camera_ref.is_acquiring)
+
+    def test_invalid_source_id(self):
+        result = self.camera_ref.start_acquisition(src=-1)
+        self.assertFalse(result)
+
 
 if __name__ == '__main__':
     unittest.main()

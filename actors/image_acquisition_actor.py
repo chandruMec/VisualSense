@@ -1,31 +1,33 @@
-import pykka
-import cv2
+from actors import *
+from image_sources import CameraFactory
+from actors.message import StopAcquisition, StartAcquisition
 
+# ImageAcquisition
+# noinspection PyMethodMayBeStatic
 class ImageAcquisitionActor(pykka.ThreadingActor):
-    def __init__(self, image_source):
+    def __init__(self, camera_type):
         super().__init__()
-        self.image_source = image_source
+        self.camera = CameraFactory.create_camera(camera_type, actor=self.actor_ref.proxy())
 
-    def on_start(self):
-        self.image_source.open()
+    def on_receive(self, message):
+        if isinstance(message, StartAcquisition):
+            self.start_acquisition(message.src)
+        elif isinstance(message, StopAcquisition):
+            self.stop_acquisition()
 
-    def on_stop(self):
-        self.image_source.close()
+    def process_frame(self, frame):
+        pass
 
-    def acquire_image(self):
-        while self.image_source.is_opened():
-            image = self.image_source.acquire_image()
-            # Process the acquired image here
-            # Send the acquired image to other actors for further processing
+    def start_acquisition(self, src):
+        self.camera.start_acquisition(src)
 
-    def cleanup(self):
-        self.stop()
+    def stop_acquisition(self):
+        self.camera.stop_acquisition()
 
 
-# Usage example:
-camera_sdk = ...  # Initialize camera SDK
-
-image_source = ImageSourceFactory.create_image_source('usb_camera', camera_sdk)
-acquisition_actor = ImageAcquisitionActor.start(image_source, use_daemon_thread=False).proxy()
-
-acquisition_actor.acquire_image()
+if __name__ == '__main__':
+    acquisition_usb = ImageAcquisitionActor.start(camera_type="usb")
+    acquisition_usb.tell(StartAcquisition(src=0))
+    time.sleep(10)
+    acquisition_usb.tell(StopAcquisition())
+    pykka.ActorRegistry.stop_all()
