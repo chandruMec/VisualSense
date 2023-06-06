@@ -37,7 +37,6 @@ class USBCamera(Camera):
             self.is_acquiring = False
             self.acquisition_thread.join()  # Wait for the acquisition thread to finish
             self.usbcam.release()
-            cv2.destroyAllWindows()
 
     def acquire_frames(self):
         while self.is_acquiring:
