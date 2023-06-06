@@ -16,8 +16,7 @@ class ImageAcquisitionActor(pykka.ThreadingActor):
             self.stop_acquisition()
 
     def process_frame(self, frame):
-        cv2.imshow("Frame", frame)
-        cv2.waitKey(1)
+        pass
 
     def start_acquisition(self, src):
         self.camera.start_acquisition(src)
