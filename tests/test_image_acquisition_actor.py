@@ -22,6 +22,5 @@ class ImageAcquisitionActorTest(unittest.TestCase):
         self.image_acquire_ref.tell(StartAcquisition(src=-1))
 
 
-
 if __name__ == '__main__':
     unittest.main()

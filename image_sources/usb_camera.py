@@ -6,20 +6,29 @@ from threading import Thread
 
 
 class USBCamera(Camera):
+    """
+    USBCamera class which acquires images from USB camera
+    """
     def __init__(self):
         super().__init__()
-        self.usbcam = None
-        self.frame_count = None
-        self.fps = None
-        self.frame_queue = None
-        self.height = None
-        self.width = None
-        self.source = None
-        self.caller_actor = None
-        self.is_acquiring = False
-        self.acquisition_thread = None
+        self.usbcam = None              # Camera
+        self.frame_count = None         # Frame Count
+        self.fps = None                 # Camera FPS
+        self.frame_queue = None         # Frames Queue
+        self.height = None              # Camera Height
+        self.width = None               # Camera Width
+        self.source = None              # Camera Source
+        self.caller_actor = None        # Caller actor variable
+        self.is_acquiring = False       # Camera status
+        self.acquisition_thread = None  # Thread variable
 
     def start_acquisition(self, src, caller_actor):
+        """
+        start_acquisition is used to start the acquisition of your camera
+        :param src: source id
+        :param caller_actor: Image acquisition actor
+        :return: None
+        """
         if not self.is_acquiring:
             print("Opening your camera")
             self.usbcam = cv2.VideoCapture(src)
@@ -37,6 +46,10 @@ class USBCamera(Camera):
                 self.acquisition_thread.start()
 
     def stop_acquisition(self):
+        """
+        stop_acquisition is used to stop the acquisition of your camera
+        :return: None
+        """
         print("Closing your camera")
         if self.is_acquiring:
             self.is_acquiring = False
@@ -44,9 +57,13 @@ class USBCamera(Camera):
             self.usbcam.release()
 
     def _acquire_frames(self):
+        """
+        acquire_frames is used to grab frames
+        :return: None
+        """
         while self.is_acquiring:
             ret, frame = self.usbcam.read()
             if not ret:
                 break
             self.frame_queue.put(frame)
-            self.caller_actor.tell(Frame(frame=self.frame_queue))
+            self.caller_actor.tell(Frame(frame_queue=self.frame_queue))
