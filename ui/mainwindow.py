@@ -356,6 +356,7 @@ class Ui_MainWindow(object):
 
         self.brightness_slider = QSlider(self.frame_12)
         self.brightness_slider.setObjectName(u"brightness_slider")
+        self.brightness_slider.setEnabled(False)
         sizePolicy1.setHeightForWidth(self.brightness_slider.sizePolicy().hasHeightForWidth())
         self.brightness_slider.setSizePolicy(sizePolicy1)
         self.brightness_slider.setMinimumSize(QSize(250, 0))
@@ -369,7 +370,7 @@ class Ui_MainWindow(object):
 
         self.brightness_num = QSpinBox(self.frame_12)
         self.brightness_num.setObjectName(u"brightness_num")
-        self.brightness_num.setEnabled(True)
+        self.brightness_num.setEnabled(False)
         sizePolicy.setHeightForWidth(self.brightness_num.sizePolicy().hasHeightForWidth())
         self.brightness_num.setSizePolicy(sizePolicy)
         self.brightness_num.setMinimum(1)
@@ -394,6 +395,7 @@ class Ui_MainWindow(object):
 
         self.contrast_slider = QSlider(self.frame_13)
         self.contrast_slider.setObjectName(u"contrast_slider")
+        self.contrast_slider.setEnabled(False)
         sizePolicy3 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy3.setHorizontalStretch(0)
         sizePolicy3.setVerticalStretch(0)
@@ -411,6 +413,7 @@ class Ui_MainWindow(object):
 
         self.contrast_num = QSpinBox(self.frame_13)
         self.contrast_num.setObjectName(u"contrast_num")
+        self.contrast_num.setEnabled(False)
         sizePolicy.setHeightForWidth(self.contrast_num.sizePolicy().hasHeightForWidth())
         self.contrast_num.setSizePolicy(sizePolicy)
         self.contrast_num.setMinimum(1)
@@ -435,6 +438,7 @@ class Ui_MainWindow(object):
 
         self.gamma_slider = QSlider(self.frame_14)
         self.gamma_slider.setObjectName(u"gamma_slider")
+        self.gamma_slider.setEnabled(False)
         sizePolicy3.setHeightForWidth(self.gamma_slider.sizePolicy().hasHeightForWidth())
         self.gamma_slider.setSizePolicy(sizePolicy3)
         self.gamma_slider.setMinimumSize(QSize(250, 0))
@@ -448,6 +452,7 @@ class Ui_MainWindow(object):
 
         self.gamma_num = QSpinBox(self.frame_14)
         self.gamma_num.setObjectName(u"gamma_num")
+        self.gamma_num.setEnabled(False)
         sizePolicy.setHeightForWidth(self.gamma_num.sizePolicy().hasHeightForWidth())
         self.gamma_num.setSizePolicy(sizePolicy)
         self.gamma_num.setMinimum(1)
@@ -473,6 +478,7 @@ class Ui_MainWindow(object):
 
         self.smoothing_slider = QSlider(self.frame_24)
         self.smoothing_slider.setObjectName(u"smoothing_slider")
+        self.smoothing_slider.setEnabled(False)
         sizePolicy.setHeightForWidth(self.smoothing_slider.sizePolicy().hasHeightForWidth())
         self.smoothing_slider.setSizePolicy(sizePolicy)
         self.smoothing_slider.setMinimumSize(QSize(250, 0))
@@ -484,6 +490,7 @@ class Ui_MainWindow(object):
 
         self.smoothing_num = QSpinBox(self.frame_24)
         self.smoothing_num.setObjectName(u"smoothing_num")
+        self.smoothing_num.setEnabled(False)
         sizePolicy.setHeightForWidth(self.smoothing_num.sizePolicy().hasHeightForWidth())
         self.smoothing_num.setSizePolicy(sizePolicy)
         self.smoothing_num.setMinimumSize(QSize(70, 0))
@@ -509,6 +516,7 @@ class Ui_MainWindow(object):
 
         self.sharpning_slider = QSlider(self.frame_15)
         self.sharpning_slider.setObjectName(u"sharpning_slider")
+        self.sharpning_slider.setEnabled(False)
         sizePolicy.setHeightForWidth(self.sharpning_slider.sizePolicy().hasHeightForWidth())
         self.sharpning_slider.setSizePolicy(sizePolicy)
         self.sharpning_slider.setMinimumSize(QSize(250, 0))
@@ -518,6 +526,7 @@ class Ui_MainWindow(object):
 
         self.sharp_num = QSpinBox(self.frame_15)
         self.sharp_num.setObjectName(u"sharp_num")
+        self.sharp_num.setEnabled(False)
         sizePolicy.setHeightForWidth(self.sharp_num.sizePolicy().hasHeightForWidth())
         self.sharp_num.setSizePolicy(sizePolicy)
 
@@ -555,10 +564,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout_13 = QHBoxLayout(self.frame_18)
         self.horizontalLayout_13.setObjectName(u"horizontalLayout_13")
         self.horizontalLayout_13.setContentsMargins(0, 0, 0, 0)
-        self.average_btn = QPushButton(self.frame_18)
+        self.average_btn = QRadioButton(self.frame_18)
         self.average_btn.setObjectName(u"average_btn")
-        sizePolicy.setHeightForWidth(self.average_btn.sizePolicy().hasHeightForWidth())
-        self.average_btn.setSizePolicy(sizePolicy)
 
         self.horizontalLayout_13.addWidget(self.average_btn)
 
@@ -569,6 +576,7 @@ class Ui_MainWindow(object):
 
         self.no_image = QSpinBox(self.frame_18)
         self.no_image.setObjectName(u"no_image")
+        self.no_image.setEnabled(False)
 
         self.horizontalLayout_13.addWidget(self.no_image)
 
@@ -694,7 +702,7 @@ class Ui_MainWindow(object):
         self.smoothing_checkbox.setText(QCoreApplication.translate("MainWindow", u"Smoothing", None))
         self.sharpning_checkbox.setText(QCoreApplication.translate("MainWindow", u"Sharpning", None))
         self.invert.setText(QCoreApplication.translate("MainWindow", u"Invert ", None))
-        self.average_btn.setText(QCoreApplication.translate("MainWindow", u"Average", None))
+        self.average_btn.setText(QCoreApplication.translate("MainWindow", u"Averaging", None))
         self.label_10.setText(QCoreApplication.translate("MainWindow", u"No.of Images", None))
         self.save_settings.setText(QCoreApplication.translate("MainWindow", u"Save Parameters", None))
         self.reset_to_saved_settings.setText(QCoreApplication.translate("MainWindow", u"Reset to Last Saved ", None))

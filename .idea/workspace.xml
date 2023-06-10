@@ -2,16 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e64bfea-f449-432f-9ce5-206721e2ccce" name="Changes" comment="Updated">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/mainwindow.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/View_thread.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/message_stock.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/unittest.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/unittest.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actors/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/actors/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actors/image_acquisition_actor.py" beforeDir="false" afterPath="$PROJECT_DIR$/actors/image_acquisition_actor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actors/message.py" beforeDir="false" afterPath="$PROJECT_DIR$/actors/message.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/image_sources/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/image_sources/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/image_sources/image_source.py" beforeDir="false" afterPath="$PROJECT_DIR$/image_sources/image_source.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/image_sources/usb_camera.py" beforeDir="false" afterPath="$PROJECT_DIR$/image_sources/usb_camera.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test_USBCamera.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_USBCamera.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_image_acquisition_actor.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_image_acquisition_actor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/main_window.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,17 +68,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;ToolWindowGit.ShowToolbar&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Mechmets&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.editor&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "ToolWindowGit.ShowToolbar": "false",
+    "last_opened_file_path": "D:/Mechmets",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "configurable.group.editor"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Python tests.Python tests for test_USBCamera.TestUSBCamera">
     <configuration name="Understanding_Actor" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="Mechmets" />

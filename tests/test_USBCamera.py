@@ -1,4 +1,5 @@
 import unittest
+
 from pykka import ActorRegistry
 from image_sources.usb_camera import USBCamera
 from actors.image_acquisition_actor import ImageAcquisitionActor
