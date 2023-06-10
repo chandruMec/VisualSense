@@ -28,9 +28,9 @@ class ImageAcquisitionActor(pykka.ThreadingActor):
         cv2.waitKey(1)
 
 
-# if __name__ == '__main__':
-#     acquisition_usb = ImageAcquisitionActor.start(camera_type="usb")
-#     acquisition_usb.tell(StartAcquisition(src=0))
-#     time.sleep(5)
-#     acquisition_usb.tell(StopAcquisition())
-#     pykka.ActorRegistry.stop_all()
+if __name__ == '__main__':
+    acquisition_usb = ImageAcquisitionActor.start(camera_type="usb")
+    acquisition_usb.tell(StartAcquisition(src=0))
+    time.sleep(5)
+    acquisition_usb.tell(StopAcquisition())
+    pykka.ActorRegistry.stop_all()
