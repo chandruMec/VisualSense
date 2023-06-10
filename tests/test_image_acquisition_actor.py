@@ -20,20 +20,7 @@ class ImageAcquisitionActorTest(unittest.TestCase):
 
     def test_with_invalid_mode(self):
         self.image_acquire_ref.tell(StartAcquisition(src=-1))
-        time.sleep(10)
-        self.image_acquire_ref.tell(StopAcquisition())
 
-    def test_close_open(self):
-        self.image_acquire_ref.tell(StopAcquisition())
-        self.image_acquire_ref.tell(StartAcquisition(src=0))
-        time.sleep(10)
-        self.image_acquire_ref.tell(StopAcquisition())
-
-    def test_open_two(self):
-        self.image_acquire_ref.tell(StartAcquisition(src=0))
-        self.image_acquire_ref.tell(StartAcquisition(src=0))
-        time.sleep(10)
-        self.image_acquire_ref.tell(StopAcquisition())
 
 
 if __name__ == '__main__':

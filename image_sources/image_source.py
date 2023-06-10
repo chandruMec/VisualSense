@@ -1,8 +1,5 @@
 from abc import ABC, abstractmethod
 
-class ProcessFrame:
-    def __init__(self, frame):
-        self.frame = frame
 
 class Camera(ABC):
     def __init__(self):
@@ -15,4 +12,6 @@ class Camera(ABC):
     @abstractmethod
     def stop_acquisition(self):
         pass
+
+
 

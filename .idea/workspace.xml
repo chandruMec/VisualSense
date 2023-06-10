@@ -2,7 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e64bfea-f449-432f-9ce5-206721e2ccce" name="Changes" comment="Updated">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/actors/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/actors/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/actors/image_acquisition_actor.py" beforeDir="false" afterPath="$PROJECT_DIR$/actors/image_acquisition_actor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/actors/message.py" beforeDir="false" afterPath="$PROJECT_DIR$/actors/message.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_sources/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/image_sources/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_sources/image_source.py" beforeDir="false" afterPath="$PROJECT_DIR$/image_sources/image_source.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_sources/usb_camera.py" beforeDir="false" afterPath="$PROJECT_DIR$/image_sources/usb_camera.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test_USBCamera.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_USBCamera.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_image_acquisition_actor.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_image_acquisition_actor.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,17 +67,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "ToolWindowGit.ShowToolbar": "false",
-    "last_opened_file_path": "D:/Mechmets",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "configurable.group.editor"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;ToolWindowGit.ShowToolbar&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Mechmets&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.editor&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Python tests.Python tests for test_USBCamera.TestUSBCamera">
     <configuration name="Understanding_Actor" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="Mechmets" />
@@ -112,6 +121,48 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="image_source" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Mechmets" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/image_sources" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/image_sources/image_source.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="usb_camera" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Mechmets" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/image_sources" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/image_sources/usb_camera.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="Python tests for test_USBCamera.TestUSBCamera" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="Mechmets" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -123,34 +174,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
       <option name="_new_target" value="&quot;test_USBCamera.TestUSBCamera&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Python tests for test_USBCamera.TestUSBCamera.test_camera_param" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
-      <module name="Mechmets" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_USBCamera.TestUSBCamera.test_camera_param&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Python tests for test_USBCamera.TestUSBCamera.test_start_and_stop_acquisition" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
-      <module name="Mechmets" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_USBCamera.TestUSBCamera.test_start_and_stop_acquisition&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
@@ -171,10 +194,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python tests.Python tests for test_USBCamera.TestUSBCamera" />
-        <item itemvalue="Python tests.Python tests for test_USBCamera.TestUSBCamera.test_camera_param" />
         <item itemvalue="Python tests.Python tests for test_image_acquisition_actor.ImageAcquisitionActorTest" />
         <item itemvalue="Python.image_acquisition_actor" />
-        <item itemvalue="Python tests.Python tests for test_USBCamera.TestUSBCamera.test_start_and_stop_acquisition" />
+        <item itemvalue="Python.image_source" />
+        <item itemvalue="Python.usb_camera" />
       </list>
     </recent_temporary>
   </component>
