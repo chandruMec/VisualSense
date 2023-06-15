@@ -1,6 +1,7 @@
 from actors import *
+from actors.image_processing_actor import ImageProcessingActor
 from image_sources import CameraFactory
-from actors.message import StopAcquisition, StartAcquisition, Frame
+from actors.message import StopAcquisition, StartAcquisition, Frame, FpsGetter, CamParams
 
 # ImageAcquisition
 # noinspection PyMethodMayBeStatic
@@ -14,6 +15,8 @@ class ImageAcquisitionActor(pykka.ThreadingActor):
         """
         super().__init__()
         self.camera = CameraFactory.create_camera(camera_type)
+        self.image_processing_actor = ImageProcessingActor.start()
+        self.fps_cal = FpsGetter()
 
     def on_receive(self, message):
         """
@@ -23,7 +26,12 @@ class ImageAcquisitionActor(pykka.ThreadingActor):
         if isinstance(message, StartAcquisition):
             self.start_acquisition(message.src)
         elif isinstance(message, Frame):
-            self.display(message.image_queue.get())
+            # self.display(frame=message.frame_queue.get())
+            self.image_processing_actor.tell(Frame(frame_queue=message.frame_queue))
+            self.fps_cal.run_fps()
+            fps = self.fps_cal.get_fps()
+            self.image_processing_actor.tell(CamParams(fps=fps))
+
         elif isinstance(message, StopAcquisition):
             self.stop_acquisition()
 
@@ -52,9 +60,10 @@ class ImageAcquisitionActor(pykka.ThreadingActor):
         cv2.waitKey(1)
 
 
-# if __name__ == '__main__':
-#     acquisition_usb = ImageAcquisitionActor.start(camera_type="usb")
-#     acquisition_usb.tell(StartAcquisition(src=0))
-#     time.sleep(5)
-#     acquisition_usb.tell(StopAcquisition())
-#     pykka.ActorRegistry.stop_all()
+
+if __name__ == '__main__':
+    acquisition_usb = ImageAcquisitionActor.start(camera_type="usb")
+    acquisition_usb.tell(StartAcquisition(src=0))
+    time.sleep(50)
+    acquisition_usb.tell(StopAcquisition())
+    pykka.ActorRegistry.stop_all()

@@ -40,7 +40,7 @@ class USBCamera(Camera):
                 self.width = self.usbcam.get(cv2.CAP_PROP_FRAME_WIDTH)
                 self.height = self.usbcam.get(cv2.CAP_PROP_FRAME_HEIGHT)
                 self.fps = self.usbcam.get(cv2.CAP_PROP_FPS)
-                self.frame_queue = Queue(maxsize=2)
+                self.frame_queue = Queue(maxsize=2*self.fps)
                 self.is_acquiring = True
                 self.acquisition_thread = Thread(target=self._acquire_frames)
                 self.acquisition_thread.start()
@@ -67,3 +67,4 @@ class USBCamera(Camera):
                 break
             self.frame_queue.put(frame)
             self.caller_actor.tell(Frame(frame_queue=self.frame_queue))
+
