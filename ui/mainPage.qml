@@ -10,12 +10,14 @@ Window {
     visible: true
     title: qsTr("VisualSense [PROTOTYPE]")
 
+    property string imageSource: "../ui/assets/images/dslr-camera-logo-design-png.png"
+
     Connections{
         target: backend
 
         function onFrameChanged(){
-            imageDisplay.source = "../ui/assets/images/camera-desk-device-electronics.jpg"
-            imageDisplay.source = "image://webcam/webcam"
+            imageSource = "image://webcam/refresh"
+            imageSource = "image://webcam/webcam"
         }
     }
 
@@ -73,7 +75,7 @@ Window {
                 }
 
                 Rectangle {
-                    id: rectangle
+                    id: processingContainer
                     x: 26
                     y: 260
                     width: 248
@@ -81,7 +83,7 @@ Window {
                     color: "#232020"
 
                     Text {
-                        id: element
+                        id: brightnessTag
                         x: 27
                         y: 35
                         color: "#ffffff"
@@ -90,15 +92,40 @@ Window {
                     }
 
                     Slider {
-                        id: slider
+                        id: brightnessSlider
                         x: 27
                         y: 75
                         height: 20
+                        snapMode: Slider.SnapAlways
+                        stepSize: 2
+                        to: 10
+                        from: -10
                         value: 0.5
+                        onMoved: {
+                            brightnessValue.text = value
+                        }
+                    }
+
+                    TextInput {
+                        id: brightnessValue
+                        x: 183
+                        y: 35
+                        width: 44
+                        height: 20
+                        color: "#ffffff"
+                        text: qsTr("0")
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignRight
+                        inputMask: "###"
+                        font.pixelSize: 12
+
+                        onEditingFinished: {
+                            brightnessSlider.value = text
+                        }
                     }
 
                     Text {
-                        id: element1
+                        id: sharpenTag
                         x: 27
                         y: 138
                         color: "#ffffff"
@@ -107,11 +134,53 @@ Window {
                     }
 
                     Slider {
-                        id: slider1
+                        id: sharpenSlider
                         x: 27
                         y: 178
+                        snapMode: Slider.SnapAlways
+                        stepSize: 2
+                        to: 10
+                        from: -10
                         value: 0.5
+
+                        onMoved: {
+                            sharpenValue.text = value
+                        }
                     }
+
+                    TextInput {
+                        id: sharpenValue
+                        x: 183
+                        y: 138
+                        width: 44
+                        height: 20
+                        color: "#ffffff"
+                        text: qsTr("0")
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignRight
+                        inputMask: "###"
+                        font.pixelSize: 12
+
+                        onEditingFinished: {
+                            if(parseInt(text)%2 > 0){
+                                sharpenSlider.value = parseInt(text) + 1
+                                text = parseInt(text) + 1
+                            }else{
+                                sharpenSlider.value = parseInt(text)
+                            }
+                        }
+                    }
+
+                    Button {
+                        id: applyButton
+                        x: 77
+                        y: 276
+                        text: qsTr("Apply")
+                        onPressed: {
+                            backend.apply_image_corrections(brightnessSlider.value, sharpenSlider.value)
+                        }
+                    }
+
                 }
         }
 
@@ -126,7 +195,7 @@ Window {
             anchors.top: parent.top
             anchors.topMargin: 50
             fillMode: Image.PreserveAspectFit
-            source: "../ui/assets/images/dslr-camera-logo-design-png.png"
+            source: mainWindow.imageSource
         }
     }
 }

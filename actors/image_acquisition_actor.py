@@ -9,13 +9,13 @@ class ImageAcquisitionActor(pykka.ThreadingActor):
     """
     ImageAcquisitionActor is pykka ThreadingActor which interacts with camera classes like USBCamera/GIGECamera
     """
-    def __init__(self, camera_type):
+    def __init__(self, camera_type, caller_actor):
         """
         :param camera_type: camera_type
         """
         super().__init__()
         self.camera = CameraFactory.create_camera(camera_type)
-        self.image_processing_actor = ImageProcessingActor.start()
+        self.caller_actor = caller_actor
         self.fps_cal = FpsGetter()
 
     def on_receive(self, message):
@@ -23,14 +23,11 @@ class ImageAcquisitionActor(pykka.ThreadingActor):
         :param message: This message consist of Message Class like StartAcquisition/StopAcquisition/Frame
         :return: None
         """
+
         if isinstance(message, StartAcquisition):
             self.start_acquisition(message.src)
         elif isinstance(message, Frame):
-            # self.display(frame=message.frame_queue.get())
-            self.image_processing_actor.tell(Frame(frame_queue=message.frame_queue))
-            self.fps_cal.run_fps()
-            fps = self.fps_cal.get_fps()
-            self.image_processing_actor.tell(CamParams(fps=fps))
+            self.caller_actor.tell(Frame(frame=message.frame))
 
         elif isinstance(message, StopAcquisition):
             self.stop_acquisition()

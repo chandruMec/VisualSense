@@ -1,14 +1,16 @@
 """
 Qml-PySide2 UI module
 """
-import sys
 
+import sys
+from actors import *
+from actors.message import GetQueue, StartAcquisition, StopAcquisition
+from actors.controller_actor import ControllerActor
 from PySide2.QtCore import QObject, Signal, Slot, QTimer
 from PySide2.QtGui import QGuiApplication, QImage
 from PySide2.QtQml import QQmlApplicationEngine
 from PySide2.QtQuick import QQuickImageProvider
 
-from actors import *
 
 
 class QtWindow(QObject):
@@ -18,13 +20,13 @@ class QtWindow(QObject):
 
     frameChanged = Signal()
 
-    def __init__(self) -> None:
+    def __init__(self, controller) -> None:
         super().__init__()
-
-        self.cap = cv2.VideoCapture(0)
-
         self.timer = QTimer()
+        self.dummy_image = QImage("../ui/assets/images/camera-desk-device-electronics.jpg")
         self.timer.timeout.connect(self.update_frame)
+        self.controller_actor = controller.start()
+        self.frame_queue = self.controller_actor.ask(GetQueue())
 
     @Slot()
     def start_cap(self) -> None:
@@ -33,6 +35,7 @@ class QtWindow(QObject):
         :return: None
         """
         print("You pressed Start Button")
+        self.controller_actor.tell(StartAcquisition(src=0))
         self.timer.start(0)
 
     @Slot()
@@ -41,8 +44,15 @@ class QtWindow(QObject):
         Function to stop Acquisition
         :return: None
         """
+        self.controller_actor.tell(StopAcquisition())
         print("You pressed Stop Button")
         self.timer.stop()
+
+    @Slot(int, int)
+    def apply_image_corrections(self, brightness_val, sharpen_val):
+        correction ={"brightness":brightness_val,"sharpness":sharpen_val}
+        print(correction)
+        # self.controller_actor.tell(SetProcess(correction=correction))
 
     def update_frame(self) -> None:
         """
@@ -51,15 +61,19 @@ class QtWindow(QObject):
         :return: None
         """
         self.frameChanged.emit()
-    
+
     def get_image(self):
-        ret, frame = self.cap.read()
-        if ret:
+        if self.frame_queue.qsize() > 0:
+            frame = self.frame_queue.get()
             image = QImage(frame.data, frame.shape[1],
                            frame.shape[0], QImage.Format_RGB888)
+            self.dummy_image = image.rgbSwapped()
             return image.rgbSwapped()
-        return QImage("../ui/assets/images/dslr-camera-logo-design-png.png")
-        
+        return self.dummy_image
+
+    def get_dummy(self):
+        return self.dummy_image
+
 
 class QmlFrameStreamer(QQuickImageProvider):
     """
@@ -70,42 +84,35 @@ class QmlFrameStreamer(QQuickImageProvider):
         super().__init__(QQuickImageProvider.Image)
         self.qt_signal_bridge = qt_window_obj
 
-    def requestImage(self, q_msg: str, *args) -> QImage:
+    def requestImage(self, id: str, *args) -> QImage:
         """
         Function to convert a Frame (np.ndarray) to QImage
-        :param q_msg: string from Qt Qml call
+        :param id: string from Qt Qml call
         :param args:
         :return: Current frame in QImage format
         """
-        if q_msg == "webcam":
+        if id == "webcam":
             return self.qt_signal_bridge.get_image()
+        elif id == "refresh":
+            return self.qt_signal_bridge.get_dummy()
 
 
-class AppActor(pykka.ThreadingActor):
-    """
-    Main application actor
-    """
+if __name__ == '__main__':
 
-    def __init__(self, qml_file_path: str) -> None:
-        super().__init__()
+    controller = ControllerActor()
 
-        self.qml_file = qml_file_path
-        self.qt_window = None
+    app = QGuiApplication(sys.argv)
+    engine = QQmlApplicationEngine()
 
-    def on_start(self) -> None:
-        app = QGuiApplication(sys.argv)
-        engine = QQmlApplicationEngine()
+    qt_window = QtWindow(controller=controller)
+    frame2qml = QmlFrameStreamer(qt_window)
 
-        self.qt_window = QtWindow()
-        frame2qml = QmlFrameStreamer(self.qt_window)
+    engine.rootContext().setContextProperty("backend", qt_window)
+    engine.addImageProvider("webcam", frame2qml)
 
-        engine.rootContext().setContextProperty("backend", self.qt_window)
-        engine.addImageProvider("webcam", frame2qml)
+    engine.load(str(qml_file))
 
-        engine.load(str(self.qml_file))
-
-        if not engine.rootObjects():
-            sys.exit(-1)
-
-        app.exec_()
-        self.actor_ref.stop()
+    if not engine.rootObjects():
+        sys.exit(-1)
+    app.exec_()
+    pykka.ActorRegistry.stop_all()

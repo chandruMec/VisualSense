@@ -65,6 +65,4 @@ class USBCamera(Camera):
             ret, frame = self.usbcam.read()
             if not ret:
                 break
-            self.frame_queue.put(frame)
-            self.caller_actor.tell(Frame(frame_queue=self.frame_queue))
-
+            self.caller_actor.tell(Frame(frame=frame))

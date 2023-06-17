@@ -10,17 +10,18 @@ class StartAcquisition:
         """
         self.src = src
 
+class GetQueue:
+    pass
+
 class Frame:
     """
     Frame is message class which stores ImageQueue
     """
-    def __init__(self,frame_queue):
+    def __init__(self,frame):
         """
-        :param frame_queue: it is frame queue
+        :param frame: it is a frame
         """
-        self.frame_queue = frame_queue
-
-
+        self.frame = frame
 
 class CamParams:
     def __init__(self,fps=None, height=None, width=None):
@@ -45,8 +46,13 @@ class FpsGetter:
         if self.elapsed_time > 1.0:
             fps = self.frame_count / self.elapsed_time
             self.fps = fps
-            print(fps)
             self.frame_count = 0
             self.start_time = time.time()
 
+class ProcessFrame:
+    def __init__(self, processed_frame):
+        self.processed_frame = processed_frame
 
+# class SetProcess:
+#     def __init__(self,correction):
+#         self.correction = correction
