@@ -1,11 +1,17 @@
-class ImageSource:
-    def acquire_image(self):
-        raise NotImplementedError("acquire_image method must be implemented in child classes")
+from abc import ABC, abstractmethod
 
-    def release_resources(self):
+
+class Camera(ABC):
+    def __init__(self):
+        self.is_acquiring = False
+
+    @abstractmethod
+    def start_acquisition(self,*args, **kwargs):
         pass
 
-    def get_resolution(self):
+    @abstractmethod
+    def stop_acquisition(self):
         pass
 
-    # Other shared methods and attributes can be added here
+
+
